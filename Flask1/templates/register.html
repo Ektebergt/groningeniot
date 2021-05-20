@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Registeren</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+	</head>
+	<body>
+		<div class="register">
+			<h1>Registeren</h1>
+			<div class="links">
+				<a href="{{ url_for('login') }}">Login</a>
+				<a href="{{ url_for('register') }}" class="active">Registeren</a>
+			</div>
+			<form action="{{ url_for('register') }}" method="post" autocomplete="off">
+				<label for="username">
+					<i class="fas fa-user"></i>
+				</label>
+				<input type="text" name="username" placeholder="Gebruikersnaam" id="username" required>
+				<label for="password">
+					<i class="fas fa-lock"></i>
+				</label>
+				<input type="password" name="password" placeholder="Wachtwoord" id="password" required>
+				<label for="dateofbirth">
+					<i class="fas fa-baby"></i>
+				</label>
+				<input type="date" name="dateofbirth" placeholder="Geboortedatum" id="dateofbirth" required>
+				<label for="length">
+					<i class="fas fa-ruler"></i>
+				</label>
+				<input type="number" name="length" placeholder="Lengte" id="length">
+				<label for="weight">
+					<i class="fas fa-weight"></i>
+				</label>
+				<input type="number" name="weight" placeholder="Gewicht" id="weight">
+				<label for="classid">
+					<i class="fas fa-school"></i>
+				</label>
+				<input type="number" name="classid" placeholder="Klas" id="classid">
+				<label for="email">
+					<i class="fas fa-envelope"></i>
+				</label>
+				<input type="email" name="email" placeholder="E-mail" id="email">
+				<div class="msg">{{ msg }}</div>
+				<input type="submit" value="Register">
+			</form>
+			
+		</div>
+	</body>
+</html>

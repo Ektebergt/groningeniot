@@ -1,0 +1,77 @@
+{% extends 'layout.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<h2>Profiel</h2>
+<div>
+    <p>Account gegevens:</p>
+    <table>
+        <tr>
+            <td>Gebruikersnaam:</td>
+            <td>{{ account['username'] }}</td>
+        </tr>
+        <tr>
+            <td>Wachtwoord:</td>
+            <td>******</td>
+        </tr>
+        <tr>
+            <td>E-mail:</td>
+            <td>{{ account['email'] }}</td>
+        </tr>
+    </table>
+</div>
+<div class="containertest">
+    <p>Persoonsgegevens:</p>
+    <table>
+        <tr>
+            <td>Klas:</td>
+            <td>{{ account['classid'] }}</td>
+        </tr>
+        <tr>
+            <td>Gewicht:</td>
+            <td>{{ account['weight'] }}</td>
+        </tr>
+        <tr>
+            <td>Leeftijd:</td>
+            <td>{{ account['dateofbirth']}}</td>
+        </tr>
+        <tr>
+            <td>Lengte:</td>
+            <td>{{ account['length'] }}</td>
+        </tr>
+    </table>
+    <input class="submit" type="submit" value="Wijzigen">
+    <input class="del" type="submit" value="Account verwijderen">
+    </div>
+
+    <h2>Groepsgegevens</h2>
+    <div class="container-groep">
+        <div class="groups">
+            <table>
+                <tr>
+                    <td>Groepid:</td>
+                    <td>{{ account['classid'] }}</td>
+                </tr>
+                <tr>
+                    <td>Groepnaam:</td>
+                    <td>---</td>
+                </tr>
+                <tr>
+                    <td>Leden:</td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <h2>Importeren van gegevens</h2>
+    <div class="container-import">
+        <div class="import">
+
+        </div>
+        <div class="export">
+
+        </div>
+    </div>
+{% endblock %}

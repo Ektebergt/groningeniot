@@ -1,0 +1,63 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+	<form method="post" action="{{ url_for('save') }}" enctype='multipart/form-data'>
+		<fieldset>
+			<legend class="hidden-first">Add New Personal</legend>
+			<input name="cat" type="hidden" value='personal'>
+			<input name="modifier" type="hidden" value='id'>
+			<input name="id" type="hidden" value="{{data[0]}}">
+			<input name="act" type="hidden" value="{{act}}">
+		
+			<label>Gast Id</label>
+			<input 
+				class="form-control" 
+				type="text" 
+				name="gast_id"
+				value="{{data[1]}}" /><br>
+			<label>Voornaam</label>
+			<input 
+				class="form-control" 
+				type="text" 
+				name="voornaam"
+				value="{{data[2]}}" /><br>
+			<label>Achternaam</label>
+			<input 
+				class="form-control" 
+				type="text" 
+				name="achternaam"
+				value="{{data[3]}}" /><br>
+			<label>Onderwijs</label>
+			<input 
+				class="form-control" 
+				type="text" 
+				name="onderwijs"
+				value="{{data[4]}}" /><br>
+			<label>Klas</label>
+			<textarea 
+				class ="ckeditor 
+				form-control" 
+				name="klas">{{data[5]}}</textarea><br>
+			<label>Gewicht</label>
+			<input 
+				class="form-control" 
+				type="text" 
+				name="gewicht"
+				value="{{data[6]}}" /><br>
+			<label>Leeftijd</label>
+			<input 
+				class="form-control" 
+				type="text" 
+				name="leeftijd"
+				value="{{data[7]}}" /><br>
+			<label>Lengte</label>
+			<input 
+				class="form-control" 
+				type="text" 
+				name="lengte"
+				value="{{data[8]}}" /><br><br>
+			<input type="submit" value=" Save " class="btn btn-success">
+		</fieldset>
+	</form>
+{% endblock %}

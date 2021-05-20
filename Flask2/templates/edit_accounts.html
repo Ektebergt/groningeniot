@@ -1,0 +1,58 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+	<form method="post" action="{{ url_for('save') }}" enctype='multipart/form-data'>
+		<fieldset>
+			<legend class="hidden-first">Add New Accounts</legend>
+			<input name="cat" type="hidden" value='accounts'>
+			<input name="modifier" type="hidden" value='id'>
+			<input name="id" type="hidden" value="{{data[0]}}">
+			<input name="act" type="hidden" value="{{act}}">
+		
+			<label>Username</label>
+			<input 
+				class="form-control" 
+				type="text" 
+				name="username"
+				value="{{data[1]}}" /><br>
+			<label>Password</label>
+			<input 
+				class="form-control" 
+				type="text" 
+				name="password"
+				value="{{data[2]}}" /><br>
+			<label>Email</label>
+			<input 
+				class="form-control" 
+				type="text" 
+				name="email"
+				value="{{data[3]}}" /><br>
+			<label>Dateofbirth</label>
+			<input 
+				class="form-control" 
+				type="text" 
+				name="dateofbirth"
+				value="{{data[4]}}" /><br>
+			<label>Length</label>
+			<input 
+				class="form-control" 
+				type="text" 
+				name="length"
+				value="{{data[5]}}" /><br>
+			<label>Weight</label>
+			<input 
+				class="form-control" 
+				type="text" 
+				name="weight"
+				value="{{data[6]}}" /><br>
+			<label>Classid</label>
+			<input 
+				class="form-control" 
+				type="text" 
+				name="classid"
+				value="{{data[7]}}" /><br><br>
+			<input type="submit" value=" Save " class="btn btn-success">
+		</fieldset>
+	</form>
+{% endblock %}

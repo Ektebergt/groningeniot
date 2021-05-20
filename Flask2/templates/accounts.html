@@ -1,0 +1,48 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+	<a class="btn btn-primary" href="./edit_accounts/add/0">
+		<i class="glyphicon glyphicon-plus-sign"></i> Add New Accounts
+	</a>
+	<h1>Accounts</h1>
+	<p>This table includes {{table_count}} accounts</p>
+	<table id="sorted" class="table table-striped table-bordered">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Username</th>
+				<th>Password</th>
+				<th>Email</th>
+				<th>Dateofbirth</th>
+				<th>Length</th>
+				<th>Weight</th>
+				<th>Classid</th>
+
+				<th>Edit</th>
+				<th>Delete</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for row_data in data %}
+			<tr>
+				{% for d in row_data %}
+					<td>{{d}}</td>
+				{% endfor %}
+				<td>
+					<a href="./edit_accounts/edit/{{row_data[0]}}">
+						<i class="glyphicon glyphicon-edit"></i>
+					</a>
+				</td>
+				<td>
+					<a 
+						href="./save?cat=accounts&act=delete&modifier=id&id={{row_data[0]}}"
+						onclick="return navConfirm(this.href);">
+					<i class="glyphicon glyphicon-trash"></i>
+					</a>
+					</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}
