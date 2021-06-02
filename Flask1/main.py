@@ -3,6 +3,7 @@ from flask_mysqldb import MySQL
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 import MySQLdb.cursors
+from handler import *
 
 import re
 
@@ -24,32 +25,26 @@ mysql = MySQL(app)
 # http://localhost:5000/pythonlogin/ - this will be the login page, we need to use both GET and POST requests
 @app.route('/', methods=['GET', 'POST'])
 def login():
-    # Output message if something goes wrong...
     msg = ''
-    # Check if "username" and "password" POST requests exist (user submitted form)
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
-        # Create variables for easy access
         username = request.form['username']
         password = request.form['password']
-        # Check if account exists using MySQL
+
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM accounts WHERE username = %s AND password = %s', (username, password,))
-        # Fetch one record and return result
+        cursor.execute('SELECT * FROM accounts WHERE username = %s', (username,))
+
         account = cursor.fetchone()
-        # If account exists in accounts table in out database
+
         if account:
-            if check_password_hash('password'):
-            # Create session data, we can access this data in other routes
+            if check_password_hash(account.get('password'),password):
                 session['loggedin'] = True
                 session['id'] = account['id']
                 session['username'] = account['username']
-            # Redirect to home page
                 return redirect(url_for('profile'))
-            else:
-            # Account doesnt exist or username/password incorrect
-                msg = 'Onjuiste gebruikersnaam/wachtwoord!'
-    # Show the login form with message (if any)
+        else:
+            msg = 'Onjuiste gebruikersnaam/wachtwoord!'
     return render_template('index.html', msg=msg)
+
 # http://localhost:5000/python/logout - this will be the logout page
 @app.route('/logout')
 def logout():
@@ -129,5 +124,7 @@ def profile():
     # User is not loggedin redirect to login page
     return redirect(url_for('templates/login'))
 
+
+ 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", debug=True, port=5001)

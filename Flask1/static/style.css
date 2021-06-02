@@ -8,11 +8,12 @@
     -moz-osx-font-smoothing: grayscale;
 }
 body {
-    background: #76b852; /* fallback for old browsers */
+    background: #ffffff; /* fallback for old browsers */
     background: -webkit-linear-gradient(right, #76b852, #8DC26F);
     background: -moz-linear-gradient(right, #76b852, #8DC26F);
     background: -o-linear-gradient(right, #76b852, #8DC26F);
     background: linear-gradient(to left, #76b852, #8DC26F);
+    background-image: url("./img/bg-1.jpg");
     margin: 0;
 }
 .login, .register {
@@ -20,6 +21,7 @@ body {
     background-color: #ffffff;
     box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
     margin: 100px auto;
+    border-radius: 5px;
 }
 .login h1, .register h1 {
     text-align: center;
@@ -48,11 +50,11 @@ body {
     font-weight: bold;
 }
 .login .links a:hover, .register .links a:hover {
-    color: #9da3ac;
+    color: #48772f;
 }
 .login .links a.active, .register .links a.active {
-    border-bottom: 3px solid #56a52c;
-    color: #56a52c;
+    border-bottom: 3px solid #48772f;
+    color: #48772f;
 }
 .login form, .register form {
     display: flex;
@@ -66,29 +68,33 @@ body {
     align-items: center;
     width: 50px;
     height: 50px;
-    background-color: #60b930;
+    background-color: #48772f;
     color: #ffffff;
+    border-radius: 5px 0px 0px 5px;
 }
 .login form input[type="password"], .login form input[type="text"], .login form input[type="email"], .register form input[type="password"], .register form input[type="text"], .register form input[type="number"], .register form input[type="email"], .register form input[type="date"] {
     width: 310px;
     height: 50px;
-    border: 1px solid #dee0e4;
+    border: 1px solid #2f3947;
     margin-bottom: 20px;
     padding: 0 15px;
+    border-radius: 0px 5px 5px 0px;
 }
 .login form input[type="submit"], .register form input[type="submit"] {
     width: 100%;
     padding: 15px;
     margin-top: 2px;
-    background-color: #3c8315;
+    background-color: #48772f;
     border: 0;
     cursor: pointer;
     font-weight: bold;
     color: #ffffff;
     transition: background-color 0.2s;
+    border-radius: 0px 0px 5px 5px;
 }
+
 .login form input[type="submit"]:hover, .register form input[type="submit"]:hover {
-    background-color: #48772f;
+    background-color: #458821;
     transition: background-color 0.2s;
 }
 .navtop {
@@ -118,14 +124,13 @@ body {
 .navtop div a {
     padding: 0 20px;
     text-decoration: none;
-    color: #c1c4c8;
-    font-weight: bold;
+    color: #ffff;
 }
 .navtop div a i {
     padding: 2px 8px 0 0;
 }
 .navtop div a:hover {
-    color: #eaebed;
+    color: #00AF47;
 }
 body.loggedin {
     background-color: #f3f4f7;
@@ -138,32 +143,35 @@ body.loggedin {
     margin: 0;
     padding: 25px 0;
     font-size: 22px;
-    border-bottom: 1px solid #e0e0e3;
-    color: #4a536e;
+    border-bottom: 1px solid black;
+    color: black;
 }
 .content > p, .content > div {
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
     margin: 25px 0;
     padding: 25px;
-  background-color: #fff;
+    background-color: #2f3947;
+    border-radius: 5px;
+
 }
 .content > p table td, .content > div table td {
   padding: 5px;
+  color: #ffffff;
 }
 .content > p table td:first-child, .content > div table td:first-child {
-  font-weight: bold;
-  color: #4a536e;
+  color: #ffffff;
   padding-right: 15px;
 }
 .content > div p {
   padding: 5px;
   margin: 0 0 10px 0;
+  color: #ffffff;    
 }
 
 .firstname {
     width: 220px;
     height: 30px;
-    border: 1px solid #dee0e4;
+    border: 1px solid #48772f;
     margin-left: 63px;
     padding: 0 15px;
 }
@@ -171,16 +179,16 @@ body.loggedin {
 .lastname{
     width: 220px;
     height: 30px;
-    border: 1px solid #dee0e4;
+    border: 1px solid #48772f;
     margin-left: 50px;
     padding: 0 15px;
 }
 
 .submit{
     width: 100px;
-    padding: 15px;
+    padding: 10px 5px 10px 5px;
     margin-top: 20px;
-    background-color: #3c8315;
+    background-color: #48772f;
     border: 0;
     cursor: pointer;
     font-weight: bold;
@@ -189,20 +197,44 @@ body.loggedin {
     border-radius: 5px;
 }
 
-.submit:hover{
+.pwchanger{
+    width: 180px;
+    padding: 10px 5px 10px 5px;
+    margin-top: 15px;
     background-color: #48772f;
+    border: 0;
+    cursor: pointer;
+    font-weight: bold;
+    color: #ffffff;
     transition: background-color 0.2s;
+    border-radius: 5px;
 }
 
 .del{
     width: 170px;
-    padding: 15px;
+    padding: 10px 5px 10px 5px;
     margin-top: 20px;
-    background-color: rgb(209, 49, 49);
+    background-color: rgb(165, 46, 46);
     border: 0;
     cursor: pointer;
     font-weight: bold;
     color: #ffffff;
     transition: background-color 0.2s;
     border-radius: 5px;
+    float: right;
 }
+.submit:hover{
+    background-color: #539b2c;
+    transition: background-color 0.2s;
+}
+
+.pwchanger:hover{
+    background-color: #539b2c;
+    transition: background-color 0.2s;
+}
+
+.del:hover{
+    background-color: rgb(224, 50, 50);
+    transition: background-color 0.2s;
+}
+
