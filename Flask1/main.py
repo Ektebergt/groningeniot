@@ -4,8 +4,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 import MySQLdb.cursors
 from handler import *
+from plot import plot
 
 import re
+import os
+import datetime
 
 
 app = Flask(__name__)
@@ -21,6 +24,15 @@ app.config['MYSQL_DB'] = 'fcgroningeniot'
 
 # Intialize MySQL
 mysql = MySQL(app)
+
+def verify(data):
+    try:
+        if len(data) == 25 and data[3:6] == ' , ' and data[10] == '/' and data[13] == '/' and data[16] == ' ' and data[-6] == ':' and data[-3] == ':':
+            x = int(data[2])
+            return True
+        return False
+    except:
+        return False
 
 # http://localhost:5000/pythonlogin/ - this will be the login page, we need to use both GET and POST requests
 @app.route('/', methods=['GET', 'POST'])
@@ -83,7 +95,7 @@ def register():
         elif not re.match(r'[A-Za-z0-9]+', username):
             msg = 'De gebruikersnaam mag alleen tekens en cijfers bevatten!'
         elif not re.match(r'[A-Za-z0-9]+', password):
-            msg = 'Wachtwoord mag alleen letters en cijfers bevatten!'
+            msg = 'Wachtwoord mag alleen letters en cijfers bevatten!' 
         elif not username or not password or not email:
             msg = 'Gelieve het formulier in te vullen!'
         else:
@@ -102,6 +114,44 @@ def register():
 def home():
     # Check if user is loggedin
     if 'loggedin' in session:
+        # connect to the database
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        # Check for "accel.txt" containing data
+        try:
+            # If "accel.txt" is found, verify and read data
+            with open("accel.txt", "r") as file:
+                # read "accel.txt"
+                raw_data = file.read()
+                # split based on linebreaks
+                data = raw_data.splitlines()
+                # for every line, do the following:
+                for values in data:
+                    # if data has been succesfully verified:
+                    if verify(values):
+                        # save the data in the database
+                        cursor.execute(f"INSERT INTO data VALUES ({session['id']}, {values[:3]}, '{values[6:]}')")
+                    else:
+                        # otherwise, do nothing with the data
+                        print('illegal value')
+                        continue
+                # save changes made to the database
+                mysql.connection.commit()
+            os.remove("accel.txt")
+        except FileNotFoundError:
+            # if the file didn't exist, do nothing
+            print('accel.txt not found')
+            pass
+        # get values
+        cursor.execute(f"SELECT datetime, value FROM data WHERE user_id = {session['id']}")
+        data = cursor.fetchall()
+        x = []
+        y = []
+        # add those values to a list
+        for item in data:
+            x.append(f"{item['datetime'].hour}:{item['datetime'].minute}:{item['datetime'].second}")
+            y.append(item['value'])
+        # plot the graph
+        plot(x, y)
         # User is loggedin show them the home page
         return render_template('home.html', username=session['username'])
     # User is not loggedin redirect to login page
@@ -124,7 +174,40 @@ def profile():
     # User is not loggedin redirect to login page
     return redirect(url_for('templates/login'))
 
+@app.route('/fcgroningeniot/profile/uploader', methods = ['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        f = request.files['file']
+        f.save(f.filename)
+    return redirect(url_for('profile'))
 
+@app.route('/fcgroningeniot/profile/delete-account')
+def account_verwijderen():
+    if 'loggedin' in session:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute(f"DELETE FROM accounts WHERE id = {session['id']}")
+        mysql.connection.commit()
+        session.clear()
+    return redirect(url_for('login'))
+
+@app.route('/fcgroningeniot/profile/change-password', methods = ['GET', 'POST'])
+def wachtwoord_aanpassen():
+    msg = ''
+    if 'loggedin' in session:
+        if request.method == 'POST':
+            password = request.form['password']
+            passencrypt = generate_password_hash(password)
+            if len(password) < 4:
+                msg = 'Wachtwoord moet minstens 4 karakters lang zijn!'
+            elif not re.match(r'[A-Za-z0-9]+', password):
+                msg = 'Wachtwoord mag alleen letters en cijfers bevatten!'
+            else:
+                cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+                cursor.execute(f"UPDATE accounts SET password = '{passencrypt}' WHERE id = {session['id']}")
+                mysql.connection.commit()
+                return redirect(url_for('login'))
+        return render_template('change_password.html', msg=msg)
+    return redirect(url_for('login'))
  
 if __name__ == "__main__":
     app.run(host="127.0.0.1", debug=True, port=5001)

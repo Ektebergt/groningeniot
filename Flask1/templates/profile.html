@@ -38,8 +38,8 @@
         </tr>
     </table>
     <input class="submit" type="submit" value="Wijzigen">
-    <input class="pwchanger" type="submit" value="Wachtwoord wijzigen">
-    <input class="del" type="submit" value="Account verwijderen">
+    <a href="{{ url_for('wachtwoord_aanpassen') }}"><input class="pwchanger" type="submit" value="Wachtwoord wijzigen"></a>
+    <a href="/fcgroningeniot/profile/delete-account"><input class="del" type="submit" value="Account verwijderen"></a>
     </div>
 
     <h2>Groepsgegevens</h2>
@@ -65,7 +65,11 @@
     <h2>Importeren van gegevens</h2>
     <div class="container-import">
         <div class="import">
-
+            <form action = "{{ url_for('upload_file') }}" method = "POST" 
+                enctype = "multipart/form-data">
+                <input type = "file" name = "file" />
+                <input type = "submit"/>
+            </form>   
         </div>
         <div class="export">
 
